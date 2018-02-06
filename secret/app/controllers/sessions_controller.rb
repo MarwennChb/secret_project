@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
 		if user && user.authenticate(params[:session][:password]) #si l'utilisateur exite et si on arrive à l'authetifier  fonction donnée par la méthode secure password par la gem decrypt
 			#login(cf fonction login dans le helper)
 			log_in user
+			remember user
 			redirect_to user #nous redirige vers la page show du User
 		else
 			#message erreur
@@ -18,7 +19,7 @@ class SessionsController < ApplicationController
 
   def destroy
 
-  	log_out
+  	log_out if logged_in?
   	redirect_to root_url
 
   end
